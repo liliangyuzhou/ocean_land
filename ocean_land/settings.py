@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework'
+    'rest_framework',
     'drf_yasg',
     # 自定义子应用
     'user.apps.UserConfig',
@@ -152,7 +152,7 @@ LOGGING = {
         'file': {
             'level': 'INFO',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': '{}/logs/service_{}.log'.format(BASE_DIR, datetime.datetime.now().date()),  # 日志输出文件
+            'filename': os.path.join(BASE_DIR,"logs/service.log"),  # 日志输出文件
             'maxBytes': 1024 * 1024 * 5,  # 文件大小
             'backupCount': 5,  # 备份份数
             'formatter': 'standard',  # 使用哪种formatters日志格式
