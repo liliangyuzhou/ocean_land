@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path,re_path
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from rest_framework.documentation import include_docs_urls
 
 schema_view = get_schema_view(
     openapi.Info(title="接口测试文档",  # 必传
@@ -32,8 +33,12 @@ schema_view = get_schema_view(
 )
 urlpatterns = [
     path('admin/', admin.site.urls),
+    #drf-yasg
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path(r'swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path(r'redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+
+    #coreapi
+    path('docs/', include_docs_urls(title="测试平台接口文档", description="这是一个接口文档")),
 
 ]
