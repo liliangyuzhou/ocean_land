@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,re_path,include
+from django.urls import path, re_path, include
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework.documentation import include_docs_urls
@@ -33,15 +33,18 @@ schema_view = get_schema_view(
 )
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #drf-yasg
+    # drf-yasg
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path(r'swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path(r'redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 
-    #coreapi
+    # coreapi
     path('docs/', include_docs_urls(title="测试平台接口文档", description="这是一个接口文档")),
 
-    #user子应用的路由映射
-    path('user/',include('user.urls'))
+    # user子应用的路由映射
+    path('user/', include('user.urls')),
+
+    # 添加djangorestframework-jwt中的认证
+    path('api/', include('rest_framework.urls'))
 
 ]
