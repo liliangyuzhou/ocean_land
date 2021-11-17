@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import os
 import datetime
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -133,12 +134,24 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-REST_FRAMEWORK={
-# 指定用于支持coreapi的schema
+REST_FRAMEWORK = {
+    # 指定用于支持coreapi的schema
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    # 覆盖drf默认的认证
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        # jwt token认证，顺序是先jwttoken-然后session，然后Basic
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication'
+        # 支持账号密码进行认证
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication'
+    ],
+    # 覆盖drf默认的授权
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
 }
 
-#添加日志配置
+# 添加日志配置
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -152,7 +165,7 @@ LOGGING = {
         'file': {
             'level': 'INFO',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': os.path.join(BASE_DIR,"logs/service.log"),  # 日志输出文件
+            'filename': os.path.join(BASE_DIR, "logs/service.log"),  # 日志输出文件
             'maxBytes': 1024 * 1024 * 5,  # 文件大小
             'backupCount': 5,  # 备份份数
             'formatter': 'standard',  # 使用哪种formatters日志格式
@@ -164,8 +177,8 @@ LOGGING = {
         },
     },
     'loggers': {
-        'mytest': {   # mytest，打印所有信息到名称为console的handler。
-            'handlers': ['console','file'],
+        'mytest': {  # mytest，打印所有信息到名称为console的handler。
+            'handlers': ['console', 'file'],
             'level': 'DEBUG',
             'propagate': True
         },
