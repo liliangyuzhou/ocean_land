@@ -137,7 +137,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     # 指定用于支持coreapi的schema
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
-    # 覆盖drf默认的认证
+    # 覆盖drf默认的认证。认证也可以在类视图中指定，但是认证一般都是全局指定
     'DEFAULT_AUTHENTICATION_CLASSES': [
         # jwt token认证，顺序是先jwttoken-然后session，然后Basic
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
@@ -145,7 +145,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication'
     ],
-    # 覆盖drf默认的授权
+    # 覆盖drf默认的授权，一般授权不需要全局指定，都是在类视图中指定
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ],
