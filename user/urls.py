@@ -10,6 +10,6 @@ from . import views
 urlpatterns = [
     # path('login/', ObtainJSONWebToken.as_view()),
     # 在子应用中添加jwt认证的login接口，path('login/', ObtainJSONWebToken.as_view())和下面一样
-    # path('login/', obtain_jwt_token)
-    path('register/',views.RegisterView.as_view())
+    path('login/', obtain_jwt_token),
+    path('register/',views.RegisterView.as_view()),
 ]
