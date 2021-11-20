@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'drf_yasg',
+    #开启跨域,顺序一般写在django自带app的下面，不能写在自己定义的子应用下面，不然会报错
+    'corsheaders',
     # 自定义子应用
     'user.apps.UserConfig',
 
@@ -47,13 +49,24 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+#跨域配置
+#允许前端使用所有的域名/IP访问后段接口
+CORS_ORIGIN_ALLOW_ALL=True
+# #限制部分域名/ip才可以访问后段接口,这里要指定前后台的域名或者host+端口,只制定前端的域名不指定后段的域名也会报错
+# CORS_ORIGIN_WHITELIST=[
+#     'http://127.0.0.1:8000',
+#     'http://localhost:8000',
+#     'http://192.168.1.12:8080',
+# ]
 
+CORS_ALLOW_CREDENTIALS=True
 ROOT_URLCONF = 'ocean_land.urls'
 
 TEMPLATES = [
