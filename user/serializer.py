@@ -5,6 +5,7 @@
 # email： liang1.li@ximalaya.com
 from rest_framework import serializers
 from django.contrib.auth.models import User
+from rest_framework.validators import UniqueValidator
 
 from utils.tools import get_token
 class RegisterModelSerializer(serializers.ModelSerializer):
@@ -40,7 +41,9 @@ class RegisterModelSerializer(serializers.ModelSerializer):
                 'label': '邮箱',
                 'help_text': '邮箱',
                 'write_only':True,
-                'required':True
+                'required':True,
+                #添加邮箱不允许重复
+                'validators':[UniqueValidator(queryset=User.objects.all(),message=['此邮箱不能重复使用'])]
             },
             'password': {
                 'label': '密码',
