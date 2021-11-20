@@ -31,8 +31,8 @@ class RegisterModelSerializer(serializers.ModelSerializer):
                 'max_length': 20,
                 'help_text': '用户名',
                 'error_messages': {
-                    'min_length': '确认密码的最小长度为6位',
-                    'max_length': '确认密码的最大长度为20位',
+                    'min_length': '用户名的最小长度为6位',
+                    'max_length': '用户名的最大长度为20位',
                 }
             },
             #邮箱字段user中是非必填，我们需求是必填 'required':True
@@ -64,7 +64,15 @@ class RegisterModelSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         validated_data.pop('password_confirm')
-        user=User.objects.create(**validated_data)
+        # user=User.objects.create(**validated_data)
+        #调用此方法密码生成不是明文密码了,应当保存为加密的密码，调用set_password方法
+        #方法一
+        user = User(**validated_data)
+        user.set_password(validated_data['password'])
+        user.save()
+        #方法二，直接调用create_user()方法，创建的对象数据里面的秘密就是加密过的密码
+        # user=User.objects.create_user(**validated_data)
+
         user.token=get_token(user)
         return user
 
