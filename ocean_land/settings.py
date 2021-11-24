@@ -13,10 +13,11 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import os
 import datetime
+import sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+sys.path.insert(0,os.path.join(BASE_DIR,'apps'))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -42,7 +43,15 @@ INSTALLED_APPS = [
     # 开启跨域,顺序一般写在django自带app的下面，不能写在自己定义的子应用下面，不然会报错
     'corsheaders',
     # 自定义子应用
-    'user.apps.UserConfig',
+    'user',
+    'interfaces',
+    'projects',
+    'envs',
+    'configures',
+    'debugtalk',
+    'testcases',
+    'testsuites',
+    'reports',
 
 ]
 
