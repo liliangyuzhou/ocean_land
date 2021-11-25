@@ -111,7 +111,7 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'oceanland',
+        'NAME': 'ocean_land1',
         'USER': 'root',
         'PASSWORD': 'li123456',
         'HOST': '106.14.220.57',

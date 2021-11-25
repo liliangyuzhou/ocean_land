@@ -5,7 +5,6 @@ from django.shortcuts import render
 from rest_framework import generics
 from rest_framework.views import APIView
 from .serializer import RegisterModelSerializer
-from .models import User
 
 #写类视图要继承什么类，看看需求需要那些方法
 #注册不要要开启权限
