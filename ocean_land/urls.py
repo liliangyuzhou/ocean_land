@@ -45,6 +45,8 @@ urlpatterns = [
     path('user/', include('user.urls')),
 
     # 添加djangorestframework-jwt中的认证
-    path('api/', include('rest_framework.urls'))
+    path('api/', include('rest_framework.urls')),
+
+    path('projects/', include('projects.urls')),
 
 ]

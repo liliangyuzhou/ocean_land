@@ -17,7 +17,7 @@ import sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-sys.path.insert(0,os.path.join(BASE_DIR,'apps'))
+sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -173,8 +173,17 @@ REST_FRAMEWORK = {
     ],
     # 覆盖drf默认的授权，一般授权不需要全局指定，都是在类视图中指定
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticated',
     ],
+    #分页引擎
+    'DEFAULT_PAGINATION_CLASS':'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 3,
+
+    # 当前搜索&&排序引擎配置全局生效
+    'DEFAULT_FILTER_BACKENDS': ['rest_framework.filters.SearchFilter','rest_framework.filters.OrderingFilter'],
+    # Filtering，修改查询字符串参数的key，默认key是search
+    'SEARCH_PARAM': 'search1',
+    'ORDERING_PARAM': 'ordering1',
 }
 
 # 添加日志配置
