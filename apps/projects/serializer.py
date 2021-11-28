@@ -32,9 +32,7 @@ class ProjectNameSerializer(serializers.ModelSerializer):
 
 class ProjectInterfacesSerializer(serializers.ModelSerializer):
     #单独输出一个项目下所有接口的id
-    interfaces_set = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
-    #输出一个项目下所有接口的详细信息
-    # interfaces_set = InterfacesModelSerializer(label="所属接口的信息", many=True)
+    interfaces = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
     class Meta:
         model=Projects
-        fields = ('interfaces_set')
+        fields = ('name','interfaces',)
