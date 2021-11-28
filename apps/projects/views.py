@@ -5,6 +5,7 @@ from rest_framework import viewsets,permissions,decorators
 from rest_framework.response import Response
 from . import serializer
 from .models import Projects
+from utils.tools import get_count_by_project
 class ProjectsViewSet(viewsets.ModelViewSet):
     queryset = Projects.objects.filter(is_delete=False)
     serializer_class = serializer.ProjectModelSerializer
@@ -45,3 +46,16 @@ class ProjectsViewSet(viewsets.ModelViewSet):
         queryset = self.get_object()
         serializer=self.get_serializer(instance=queryset)
         return Response(serializer.data,status=200)
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            datas=serializer.data
+            datas=get_count_by_project(datas)
+            return self.get_paginated_response(datas)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
