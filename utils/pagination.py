@@ -10,9 +10,9 @@ class PageNumberPagination(_PageNumberPagination):
     #每页默认的数据条数，优先级最高，比全局配置还要高'PAGE_SIZE': 3,所以全局配置不需要注销
     page_size =10
     #每页查询字符串的名称，默认是'page'，可以更改
-    page_query_param = 'p'
+    page_query_param = 'page'
     #每页指定数据条数的查询字符串的名称，默认是None，可以修改
-    page_size_query_param = 's'
+    page_size_query_param = 'size'
     page_query_description = '第几页'
     page_size_query_description = '每页几条'
     #每页限制最多展示的数据条数
