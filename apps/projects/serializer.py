@@ -6,6 +6,7 @@
 from rest_framework import serializers
 from .models import Projects
 from apps.debugtalk.models import DebugTalks
+from interfaces.serializer import InterfacesModelSerializer
 
 
 class ProjectModelSerializer(serializers.ModelSerializer):
@@ -28,11 +29,12 @@ class ProjectModelSerializer(serializers.ModelSerializer):
 class ProjectNameSerializer(serializers.ModelSerializer):
     class Meta:
         model=Projects
-        fields = ('name',)
+        fields = ('id','name',)
 
 class ProjectInterfacesSerializer(serializers.ModelSerializer):
     #单独输出一个项目下所有接口的id
-    interfaces = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
+    # interfaces = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
+    interfaces = InterfacesModelSerializer(read_only=True, many=True)
     class Meta:
         model=Projects
         fields = ('name','interfaces',)
