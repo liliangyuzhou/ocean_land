@@ -58,4 +58,6 @@ class ProjectsViewSet(viewsets.ModelViewSet):
             return self.get_paginated_response(datas)
 
         serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
+        datas = serializer.data
+        datas = get_count_by_project(datas)
+        return Response(datas)
