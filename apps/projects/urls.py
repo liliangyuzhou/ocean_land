@@ -9,7 +9,7 @@ from rest_framework.routers import DefaultRouter
 from rest_framework_jwt.views import obtain_jwt_token, ObtainJSONWebToken
 from .views import ProjectsViewSet
 router=DefaultRouter()
-router.register(r"projects",ProjectsViewSet)
+router.register(r"",ProjectsViewSet)
 urlpatterns = [
     # path('projects/',ProjectsViewSet.as_view())
 ]
