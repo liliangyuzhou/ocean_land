@@ -23,7 +23,7 @@ class ProjectsViewSet(viewsets.ModelViewSet):
         instance.save()
 
 
-    @decorators.action(methods=['GET','POST'],detail=False,url_path='pm',url_name='url_name')
+    @decorators.action(methods=['GET','POST'],detail=False)
     def names(self,request,*args,**kwargs):
         queryset=self.get_queryset()
         serializer=self.get_serializer(instance=queryset,many=True)
