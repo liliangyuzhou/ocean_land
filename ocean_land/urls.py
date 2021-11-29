@@ -48,5 +48,6 @@ urlpatterns = [
     path('api/', include('rest_framework.urls')),
 
     path('projects/', include('projects.urls')),
+    path('interfaces/', include('interfaces.urls')),
 
 ]
