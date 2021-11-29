@@ -7,7 +7,7 @@ from rest_framework import serializers
 from .models import Interfaces
 
 class InterfacesSerializer(serializers.ModelSerializer):
-    project=serializers.StringRelatedField(read_only=True,label="所属项目名称")
+    # project=serializers.StringRelatedField(read_only=True,label="所属项目名称")
     class Meta:
         model=Interfaces
         exclude=('update_time','is_delete')
@@ -21,6 +21,12 @@ class InterfacesNameSerializer(serializers.ModelSerializer):
     class Meta:
         model=Interfaces
         fields = ('name',)
+
+class InterfacesModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        # 1.指定参考哪一个模型类来创建
+        model=Interfaces
+        fields=('id','name')
 
 
 
