@@ -49,6 +49,7 @@ urlpatterns = [
 
     path('projects/', include('projects.urls')),
     path('interfaces/', include('interfaces.urls')),
-    path('envs/', include('interfaces.urls')),
+    path('envs/', include('envs.urls')),
+    path('debugtalks/', include('debugtalk.urls')),
 
 ]
