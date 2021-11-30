@@ -22,14 +22,16 @@ class InterfacesSerializer(serializers.ModelSerializer):
             }
         }
     def create(self, validated_data):
-        project=validated_data.pop('project_id')
-        validated_data['project']=project
+        # project=validated_data.pop('project_id')
+        # validated_data['project']=project
+        validated_data['project_id']=validated_data['project_id'].id
         interface=Interfaces.objects.create(**validated_data)
         return interface
     def update(self, instance, validated_data):
         if 'project_id' in validated_data:
-            project = validated_data.pop('project_id')
-            validated_data['project'] = project
+            # project = validated_data.pop('project_id')
+            # validated_data['project'] = project
+            validated_data['project_id'] = validated_data['project_id'].id
         return super(InterfacesSerializer, self).update(instance,validated_data)
 
 class InterfacesNameSerializer(serializers.ModelSerializer):
