@@ -78,5 +78,11 @@ def get_count_by_interface(datas):
     return data_list
 
 
+def env_time_format(datas):
+    data_list = []
+    for item in datas:
+        item['create_time'] = UTC2BJS(item['create_time'])
+        data_list.append(item)
+    return data_list
 
 
