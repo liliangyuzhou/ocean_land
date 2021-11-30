@@ -51,8 +51,8 @@ class InterfacesViewSet(viewsets.ModelViewSet):
         one_list=[]
         for item in testcases:
             one_list.append(
-                {'id':item['id'],
-                 'name':item['name']
+                {'id':item.id,
+                 'name':item.name
                  }
             )
         return Response(data=one_list)
@@ -63,8 +63,8 @@ class InterfacesViewSet(viewsets.ModelViewSet):
         one_list=[]
         for item in configures:
             one_list.append(
-                {'id':item['id'],
-                 'name':item['name']
+                {'id': item.id,
+                 'name': item.name
                  }
             )
         return Response(data=one_list)
