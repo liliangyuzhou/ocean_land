@@ -85,4 +85,24 @@ def env_time_format(datas):
         data_list.append(item)
     return data_list
 
+def report_time_format(datas):
+    data_list = []
+    for item in datas:
+        result='Pass' if  item['result']==1 else 'Fail'
+        item['result']=result
+        item['create_time'] = UTC2BJS(item['create_time'])
+        data_list.append(item)
+    return data_list
+
+def get_contents_from_file(filename,chunk_size=512):
+    with open(filename,encoding='utf-8') as f:
+        while True:
+            n=f.read(chunk_size)
+            if n:
+                yield n
+            else:
+                break
+
+
+
 

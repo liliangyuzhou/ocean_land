@@ -228,3 +228,6 @@ JWT_AUTH = {
     # 设置token的失效时间
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=3),
 }
+
+REPORT_DIR=os.path.join(BASE_DIR,'report')
+

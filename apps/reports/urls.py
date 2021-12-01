@@ -3,12 +3,10 @@
 # author： liliang
 # datetime： 2021/11/30 17:52 
 # email： liang1.li@ximalaya.com
-
-from django.urls import path
-
+from rest_framework.routers import DefaultRouter
 from .views import ReportsViewSet
-
+router=DefaultRouter()
+router.register(r"",ReportsViewSet)
 urlpatterns = [
-    path('',ReportsViewSet.as_view)
 ]
-
+urlpatterns += router.urls
