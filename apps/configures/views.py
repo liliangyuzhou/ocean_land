@@ -18,10 +18,10 @@ class ConfigureViewSet(ModelViewSet):
         instance = self.get_object()
 
         config_request=json.loads(instance.request)
-        config_header=config_request['config']['request']['headers']
+        config_header=config_request['config']['request'].get('headers')
         config_header_list=handle_data.hand_data4(config_header)
 
-        config_variables = config_request['config']['variables']
+        config_variables = config_request['config'].get('variables')
         config_variables_list=handle_data.hand_data2(config_variables)
 
         config_name=config_request['config']['name']
