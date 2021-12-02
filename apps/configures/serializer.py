@@ -26,7 +26,7 @@ class InterfacesAndProjectSerializer(serializers.ModelSerializer):
         }
 
     def validate(self, attrs):
-        if not Interfaces.objects.filter(id=attrs['interface_id'], is_delete=False, project_id=attrs['project_id']):
+        if not Interfaces.objects.filter(id=attrs['interface_id'], is_delete=False, project_id=attrs['project_id']).exists():
             raise serializers.ValidationError("项目和接口信息不对应")
         return attrs
 
