@@ -19,5 +19,5 @@ class EnvModelSerializer(serializers.ModelSerializer):
 
 class EnvNameSerializer(serializers.ModelSerializer):
     class Meta:
-        models=Envs
+        model=Envs
         fields=('id','name')
