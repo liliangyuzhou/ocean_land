@@ -7,6 +7,7 @@ from rest_framework import serializers
 from .models import Projects
 from apps.debugtalk.models import DebugTalks
 from interfaces.serializer import InterfacesModelSerializer
+from utils import validates
 
 
 class ProjectModelSerializer(serializers.ModelSerializer):
@@ -38,3 +39,13 @@ class ProjectInterfacesSerializer(serializers.ModelSerializer):
     class Meta:
         model=Projects
         fields = ('name','interfaces',)
+
+class RunProjectTestCaseSerializer(serializers.ModelSerializer):
+    """
+    运行整个项目的测试用例的序列化器
+    """
+    env_id = serializers.IntegerField(write_only=True, validators=[validates.exist_env_id], help_text="环境变量id")
+
+    class Meta:
+        model = Projects
+        fields = ('id', 'env_id')
