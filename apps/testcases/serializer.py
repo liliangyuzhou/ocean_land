@@ -7,6 +7,7 @@ from rest_framework import serializers
 from apps.testcases.models import Testcases
 from interfaces.models import Interfaces
 from utils import validates
+from envs.models import Envs
 
 
 class InterfacesAndProjectSerializer(serializers.ModelSerializer):
@@ -58,3 +59,11 @@ class TestCaseModelSerializer(serializers.ModelSerializer):
             interface_dict = validated_data.pop('interface')
             validated_data['interface_id'] = interface_dict['interface_id']
         return super().update(instance, validated_data)
+
+
+class RunTestCaseSerializer(serializers.ModelSerializer):
+    env_id = serializers.IntegerField(write_only=True, validators=[validates.exist_env_id], help_text="环境变量id")
+
+    class Meta:
+        model = Testcases
+        fields = ('id', 'env_id')

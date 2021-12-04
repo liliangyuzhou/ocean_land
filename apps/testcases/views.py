@@ -1,11 +1,15 @@
 import json
-
+import os
+from datetime import datetime
 from rest_framework import viewsets,permissions,decorators
 from rest_framework.response import Response
 from . import serializer
 from apps.testcases.models import Testcases
 from interfaces.models import Interfaces
 from utils import handle_data
+from ocean_land import settings
+from envs.models import Envs
+from utils import run_tools
 class TestCasesViewSet(viewsets.ModelViewSet):
     serializer_class = serializer.TestCaseModelSerializer
     queryset = Testcases.objects.filter(is_delete=False)
@@ -93,6 +97,37 @@ class TestCasesViewSet(viewsets.ModelViewSet):
             "teardownHooks":testcase_teardown_hooks_datas_list,
         }
         return Response(datas)
+
+    @decorators.action(methods=['post'],detail=True)
+    def run(self,request,*args,**kwargs):
+        instance=self.get_object()
+        serializer=self.get_serializer(instance,data=request.data)
+        serializer.is_valid(raise_exception=True)
+        datas=serializer.validated_data
+        env_id=datas.get('env_id')
+        dir_testcase_path=os.path.join(settings.SUITES_DIR,datetime.strftime(datetime.now(),'%Y%m%d%H%M%S%f'))
+        os.mkdir(dir_testcase_path)
+
+        env=Envs.objects.get(id=env_id)
+
+        #生成ymal测试用例
+        run_tools.generate_testcases_file(instance,env,dir_testcase_path)
+
+        #运行测试用例，返回报告id
+        return run_tools.run_testcase(instance,dir_testcase_path)
+
+
+
+
+
+
+    def  get_serializer_class(self):
+        if self.action=="run":
+            return serializer.RunTestCaseSerializer
+        else:
+            return self.serializer_class
+
+
 
 
 

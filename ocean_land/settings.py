@@ -230,4 +230,5 @@ JWT_AUTH = {
 }
 
 REPORT_DIR=os.path.join(BASE_DIR,'report')
+SUITES_DIR=os.path.join(BASE_DIR,'suites')
 
