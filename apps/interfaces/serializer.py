@@ -6,6 +6,7 @@
 from rest_framework import serializers
 from .models import Interfaces
 from projects.models import Projects
+from utils import validates
 
 class InterfacesSerializer(serializers.ModelSerializer):
     #StringRelatedField默认是read_only=True,可以查看源码
@@ -45,5 +46,13 @@ class InterfacesModelSerializer(serializers.ModelSerializer):
         model=Interfaces
         fields=('id','name')
 
+class RunInterfaceTestCaseSerializer(serializers.ModelSerializer):
+    """
+    运行整个项目的测试用例的序列化器
+    """
+    env_id = serializers.IntegerField(write_only=True, validators=[validates.exist_env_id], help_text="环境变量id")
 
+    class Meta:
+        model = Interfaces
+        fields = ('id', 'env_id')
 
