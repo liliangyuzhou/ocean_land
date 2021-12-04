@@ -9,7 +9,7 @@ from ocean_land import settings
 from envs.models import Envs
 from utils import run_tools
 from interfaces.models import Interfaces
-from testcases.models import Testcases
+from apps.testcases.models import Testcases
 class ProjectsViewSet(viewsets.ModelViewSet):
     queryset = Projects.objects.filter(is_delete=False)
     serializer_class = serializer.ProjectModelSerializer

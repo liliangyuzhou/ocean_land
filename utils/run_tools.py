@@ -10,9 +10,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from datetime import datetime
 from httprunner.task import HttpRunner
-from debugtalk.models import DebugTalks
+from apps.debugtalk.models import DebugTalks
 from configures.models import Configures
-from testcases.models import Testcases
+from apps.testcases.models import Testcases
 from reports.models import Reports
 
 def generate_testcases_file(instance,env,dir_testcase_path):
