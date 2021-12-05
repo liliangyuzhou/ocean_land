@@ -60,8 +60,8 @@ class TestCasesViewSet(viewsets.ModelViewSet):
         testcase_extract_datas = testcase_request.get('test').get('extract')
         testcase_extract_datas_list = handle_data.hand_data3(testcase_extract_datas)
 
-        #处理parameter数据
-        testcase_parameters_datas = testcase_request.get('test').get('extract')
+        #处理parameters数据
+        testcase_parameters_datas = testcase_request.get('test').get('parameters')
         testcase_parameters_datas_list = handle_data.hand_data3(testcase_parameters_datas)
 
         #处理setup_hooks数据
