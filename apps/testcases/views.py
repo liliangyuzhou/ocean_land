@@ -85,7 +85,7 @@ class TestCasesViewSet(viewsets.ModelViewSet):
             "selected_testcase_id":selected_testcase_id,
             "method":testcase_request_datas.get('method'),
             "url":testcase_request_datas.get('url'),
-            "param":testcase_parameters_datas_list,
+            "param":testcase_params_list,
             "header":testcase_headers_list,
             "variable":testcase_form_datas_list,#表单请求
             "jsonVariable":testcase_json_datas,
