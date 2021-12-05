@@ -228,6 +228,8 @@ JWT_AUTH = {
     'JWT_AUTH_HEADER_PREFIX': 'Bearer',
     # 设置token的失效时间
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=3),
+    #修改JWT认证之后接口返回
+    'JWT_RESPONSE_PAYLOAD_HANDLER':'utils.jwt_payload_handler.jwt_response_payload_handler',
 }
 
 REPORT_DIR=os.path.join(BASE_DIR,'report')
