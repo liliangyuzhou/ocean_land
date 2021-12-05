@@ -28,7 +28,7 @@ def generate_testcases_file(instance,env,dir_testcase_path):
         'config':{
             "name":instance.name,
             'request':{
-                "base_url":env.base_url if env else "",
+                "base_url":env.baseurl if env else "",
 
             }
         }
@@ -37,10 +37,10 @@ def generate_testcases_file(instance,env,dir_testcase_path):
     testcases_list.append(config)
 
     #获取当前测试用例的前置信息
-    include=json.loads(instance.include,encodings="utf-8")
+    include=json.loads(instance.include,encoding="utf8")
 
     #获取当前用例的请求信息
-    request=json.loads(instance.request,encodings="utf-8")
+    request=json.loads(instance.request,encoding="utf8")
 
     interface_name=instance.interface.name
     project_name=instance.interface.project.name
@@ -49,7 +49,7 @@ def generate_testcases_file(instance,env,dir_testcase_path):
 
     if not os.path.exists(testcase_projetc_dir_path):
         os.mkdir(testcase_projetc_dir_path)
-        debugtalk_obj=DebugTalks.objects.filter(is_delete=False,id=instance.interface.interface_id).first()
+        debugtalk_obj=DebugTalks.objects.filter(is_delete=False,id=instance.interface.project_id).first()
         if debugtalk_obj:
             debugtalk=debugtalk_obj.debugtalk
         else:
@@ -57,7 +57,7 @@ def generate_testcases_file(instance,env,dir_testcase_path):
 
         #创建debugtalk.py文件
         debugtalk_path=os.path.join(testcase_projetc_dir_path,'debugtalk.py')
-        with open(debugtalk_path,mode="w",encoding="utf-8") as f:
+        with open(debugtalk_path,mode="w",encoding="utf8") as f:
             f.write(debugtalk)
 
     #在上方创建的项目目录下创建接口目录
@@ -72,7 +72,7 @@ def generate_testcases_file(instance,env,dir_testcase_path):
         config_id=include.get('config')
         config_obj=Configures.objects.filter(is_delete=True,id=config_id).first()
         if config_obj:
-            config_request=json.loads(config_obj.request,encodings="utf-8")
+            config_request=json.loads(config_obj.request,encoding="utf-8")
 
             #{"config":{"name":"3","request":{"headers":{"2":"2"}},"variables":[{"1":"1"}]}}
             config_request.get('config').get('request').setdafault('base_url',env.base_url)
@@ -86,7 +86,7 @@ def generate_testcases_file(instance,env,dir_testcase_path):
             testcase_obj=Testcases.objects.filter(is_delete=False,id=case_id).first()
             if testcase_obj:
                 try:
-                    testcase_request=json.loads(testcase_obj.request,encodings="utf-8")
+                    testcase_request=json.loads(testcase_obj.request,encoding="utf-8")
                 except Exception as e:
                     raise e
                 else:
@@ -95,7 +95,7 @@ def generate_testcases_file(instance,env,dir_testcase_path):
     testcases_list.append(request)
 
     #将拼接好的结构体testcases_list转换为ymal文件
-    with open(os.path.join(testcase_dir_interface_path,instance.name+'.yml'),mode="w",encoding="utf-8") as f:
+    with open(os.path.join(testcase_dir_interface_path,instance.name+'.yml'),mode="w",encoding="utf8") as f:
         yaml.dump(testcases_list,f,allow_unicode=True)
 
 

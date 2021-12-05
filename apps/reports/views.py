@@ -51,7 +51,7 @@ class ReportsViewSet(viewsets.ModelViewSet):
         serializer=self.get_serializer(instance)
         datas=serializer.data
         try:
-            datas['summary']=json.loads(datas['summary'],encodings='utf-8')
+            datas['summary']=json.loads(datas['summary'],encoding='utf-8')
         except Exception as e:
             raise e
         return Response(datas)
