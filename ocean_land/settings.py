@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'testcases',
     'testsuites',
     'reports',
+    'summary',
 
 ]
 

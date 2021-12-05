@@ -55,5 +55,5 @@ urlpatterns = [
     path('testcases/', include('testcases.urls')),
     path('configures/', include('configures.urls')),
     path('testsuites/', include('testsuites.urls')),
-
+    path('summary/', include('summary.urls')),
 ]
