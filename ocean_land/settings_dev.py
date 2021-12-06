@@ -25,7 +25,7 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 SECRET_KEY = 'django-insecure-aekl_c+8jk9_v6j_3gg$8a1hl569pn0v0ny6woe+7&rv=kw7@)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -234,7 +234,4 @@ JWT_AUTH = {
 
 REPORT_DIR=os.path.join(BASE_DIR,'report')
 SUITES_DIR=os.path.join(BASE_DIR,'suites')
-#收集静态文件
-STATIC_ROOT=os.path.join(BASE_DIR,'front_code/static')
-
 
