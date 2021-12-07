@@ -192,35 +192,88 @@ REST_FRAMEWORK = {
 }
 
 # 添加日志配置
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'formatters': {
+#         'standard': {
+#             'format': '%(asctime)s [%(name)s:%(lineno)d] [%(module)s:%(funcName)s] [%(levelname)s] %(message)s'}
+#     },
+#     'filters': {
+#     },
+#     'handlers': {
+#         'file': {
+#             'level': 'INFO',
+#             'class': 'logging.handlers.RotatingFileHandler',
+#             'filename': os.path.join(BASE_DIR, "logs/service.log"),  # 日志输出文件
+#             'maxBytes': 1024 * 1024 * 5,  # 文件大小
+#             'backupCount': 5,  # 备份份数
+#             'formatter': 'standard',  # 使用哪种formatters日志格式
+#         },
+#         'console': {
+#             'level': 'DEBUG',
+#             'class': 'logging.StreamHandler',
+#             'formatter': 'standard'
+#         },
+#     },
+#     'loggers': {
+#         'mytest': {  # mytest，打印所有信息到名称为console的handler。
+#             'handlers': ['console', 'file'],
+#             'level': 'DEBUG',
+#             'propagate': True
+#         },
+#     }
+# }
 LOGGING = {
+    # 指定日志版本
     'version': 1,
+    # 指定是否禁用其他日志器
     'disable_existing_loggers': False,
+    # 定义日志输出的格式
     'formatters': {
-        'standard': {
-            'format': '%(asctime)s [%(name)s:%(lineno)d] [%(module)s:%(funcName)s] [%(levelname)s] %(message)s'}
+        # 简单格式
+        'simple': {
+            'format': '%(asctime)s - [%(levelname)s] - [msg]%(message)s'
+        },
+        # 复杂格式
+        'verbose': {
+            'format': '%(asctime)s - [%(levelname)s] - %(name)s - [msg]%(message)s - [%(filename)s:%(lineno)d ]'
+        },
     },
+    # 指定日志过滤规则
     'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
     },
+    # 指定日志输出渠道
     'handlers': {
+        # 指定在console终端的日志配置信息
+        'console': {
+            # 记录日志的等级
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        # 指定在日志文件配置信息
         'file': {
             'level': 'INFO',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': os.path.join(BASE_DIR, "logs/service.log"),  # 日志输出文件
-            'maxBytes': 1024 * 1024 * 5,  # 文件大小
-            'backupCount': 5,  # 备份份数
-            'formatter': 'standard',  # 使用哪种formatters日志格式
-        },
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'standard'
+            'filename': os.path.join(BASE_DIR, "logs/service.log"),  # 日志文件的位置
+            'maxBytes': 100 * 1024 * 1024,
+            'backupCount': 10,
+            'formatter': 'verbose',
+            'encoding': 'utf-8',
         },
     },
+    # 定义日志器
     'loggers': {
-        'mytest': {  # mytest，打印所有信息到名称为console的handler。
+        'dev06': {  # 定义了一个名为dev06的日志器
+            # 指定当前日志器关联的渠道
             'handlers': ['console', 'file'],
-            'level': 'DEBUG',
-            'propagate': True
+            'propagate': True,
+            'level': 'DEBUG',  # 日志器接收的最低日志级别
         },
     }
 }
