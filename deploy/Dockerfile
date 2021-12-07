@@ -18,12 +18,10 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/re
     pip install -i https://pypi.douban.com/simple gunicorn && \
     pip install -i https://pypi.douban.com/simple -r requirements.txt && \
     apk update && apk upgrade && \
-    rm -rf /var/cache/apk/* && \
-    chmod u+x /docker-entrypoint.sh
+    rm -rf /var/cache/apk/*
 
 VOLUME /usr/src/app/logs/
 VOLUME /usr/src/app/${PROJECT_NAME}/
 EXPOSE 8000
-
-ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD['/usr/local/bin/gunicorn', '-c' ,'/usr/src/app/configs/gunicorn_config.py', "${PROJECT_NAME}.wsgi"]
 
