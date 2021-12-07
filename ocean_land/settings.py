@@ -112,11 +112,14 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ocean_land1',
+        'NAME': 'ocean_land2',
         'USER': 'root',
         'PASSWORD': 'li123456',
-        'HOST': '106.14.220.57',
-        'PORT': '3307'
+        # 'HOST': '106.14.220.57',
+        # 'PORT': '3307'
+        #db指定成数据库的容器名称
+        'HOST': 'db',
+        'PORT': '3306'
     }
 }
 
@@ -228,13 +231,11 @@ JWT_AUTH = {
     'JWT_AUTH_HEADER_PREFIX': 'Bearer',
     # 设置token的失效时间
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=3),
-    #修改JWT认证之后接口返回
-    'JWT_RESPONSE_PAYLOAD_HANDLER':'utils.jwt_payload_handler.jwt_response_payload_handler',
+    # 修改JWT认证之后接口返回
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'utils.jwt_payload_handler.jwt_response_payload_handler',
 }
 
-REPORT_DIR=os.path.join(BASE_DIR,'report')
-SUITES_DIR=os.path.join(BASE_DIR,'suites')
-#收集静态文件
-STATIC_ROOT=os.path.join(BASE_DIR,'front_code/static')
-
-
+REPORT_DIR = os.path.join(BASE_DIR, 'report')
+SUITES_DIR = os.path.join(BASE_DIR, 'suites')
+# 收集静态文件
+STATIC_ROOT = os.path.join(BASE_DIR, 'front_code/static')
