@@ -6,10 +6,9 @@
 
 from django.urls import path
 from rest_framework.routers import DefaultRouter
-from rest_framework_jwt.views import obtain_jwt_token, ObtainJSONWebToken
-from .views import ProjectsViewSet
+from . import views
 router=DefaultRouter()
-router.register(r"",ProjectsViewSet)
+router.register(r"",views.ProjectsViewSet)
 urlpatterns = [
     # path('projects/',ProjectsViewSet.as_view())
 ]
