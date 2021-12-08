@@ -68,17 +68,19 @@ MIDDLEWARE = [
 ]
 # 跨域配置
 # 允许前端使用所有的域名/IP访问后段接口
-# CORS_ORIGIN_ALLOW_ALL=True
+CORS_ORIGIN_ALLOW_ALL=True
 # #限制部分域名/ip才可以访问后端接口,这里要指定前后台的域名或者host+端口,只制定前端的域名不指定后段的域名也会报错
-CORS_ORIGIN_WHITELIST = [
-    # 前端访问host+端口
-    'http://localhost:8080',
-    'http://192.168.1.12:8080',
-    # 后端访问host+端口
-    'http://127.0.0.1:8000',
-    'http://localhost:8000',
-
-]
+# CORS_ORIGIN_WHITELIST = [
+#     # 前端访问host+端口
+#     'http://localhost:8080',
+#     'http://192.168.1.12:8080',
+#     # 后端访问host+端口
+#     'http://127.0.0.1:8000',
+#     'http://localhost:8000',
+#     'http://106.14.220.57:8000',
+#     'http://106.14.220.57:8100'
+#
+# ]
 
 CORS_ALLOW_CREDENTIALS = True
 ROOT_URLCONF = 'ocean_land.urls'
