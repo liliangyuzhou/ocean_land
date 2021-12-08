@@ -1,4 +1,4 @@
-FROM alpine-base:latest
+FROM alpine:latest
 LABEL maintaner='1287641566@qq.com'
 LABEL description='install nginx'
 
@@ -11,7 +11,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositorie
 	mkdir -p /var/www/html && \
 	chown -R nginx:nginx /var/www/html
 
-COPY dist/ /var/www/html/
+COPY front_code/ /var/www/html/
 COPY configs/default.conf /etc/nginx/conf.d/
 COPY configs/nginx.conf /etc/nginx/nginx.conf
 COPY configs/supervisord.conf /etc/supervisord.conf
