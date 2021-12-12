@@ -9,7 +9,7 @@ from rest_framework_jwt.views import obtain_jwt_token, ObtainJSONWebToken
 from apps.user import views
 urlpatterns = [
     # path('login/', ObtainJSONWebToken.as_view()),
-    # 在子应用中添加jwt认证的login接口，path('login/', ObtainJSONWebToken.as_view())和下面一样
+    # 在用户子应用中添加jwt认证的login接口，path('login/', ObtainJSONWebToken.as_view())和下面一样
     path('login/', obtain_jwt_token),
     path('register/',views.RegisterView.as_view()),
     #验证用户名是否存在

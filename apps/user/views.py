@@ -22,7 +22,7 @@ class RegisterView(generics.CreateAPIView):
 
 
 class UsernameIsExistedView(APIView):
-
+    permissions_class=(permissions.AllowAny,)
     def get(self, request, username):
         count = User.objects.filter(username=username).count()
         one_dict = {
@@ -34,7 +34,7 @@ class UsernameIsExistedView(APIView):
 
 
 class EmailIsExistedView(APIView):
-
+    permission_classes = (permissions.AllowAny,)
     def get(self, request, email):
         count = User.objects.filter(email=email).count()
         one_dict = {
