@@ -90,7 +90,7 @@ class InterfacesViewSet(viewsets.ModelViewSet):
 
         env = Envs.objects.filter(id=env_id,is_delete=False).first()
 
-        testcase_objs= Testcases.objects.filter(is_delete=False,project=instance)
+        testcase_objs= Testcases.objects.filter(is_delete=False,interface_id=instance.id)
         if not testcase_objs.exists():
             data_dict={
                 'detail':"接口下没有测试用例，无法运行接口"
