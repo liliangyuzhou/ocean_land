@@ -25,7 +25,7 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 SECRET_KEY = 'django-insecure-aekl_c+8jk9_v6j_3gg$8a1hl569pn0v0ny6woe+7&rv=kw7@)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -68,17 +68,19 @@ MIDDLEWARE = [
 ]
 # 跨域配置
 # 允许前端使用所有的域名/IP访问后段接口
-# CORS_ORIGIN_ALLOW_ALL=True
+CORS_ORIGIN_ALLOW_ALL=True
 # #限制部分域名/ip才可以访问后端接口,这里要指定前后台的域名或者host+端口,只制定前端的域名不指定后段的域名也会报错
-CORS_ORIGIN_WHITELIST = [
-    # 前端访问host+端口
-    'http://localhost:8080',
-    'http://192.168.1.12:8080',
-    # 后端访问host+端口
-    'http://127.0.0.1:8000',
-    'http://localhost:8000',
-
-]
+# CORS_ORIGIN_WHITELIST = [
+#     # 前端访问host+端口
+#     'http://localhost:8080',
+#     'http://192.168.1.12:8080',
+#     # 后端访问host+端口
+#     'http://127.0.0.1:8000',
+#     'http://localhost:8000',
+#     'http://106.14.220.57:8000',
+#     'http://106.14.220.57:8100'
+#
+# ]
 
 CORS_ALLOW_CREDENTIALS = True
 ROOT_URLCONF = 'ocean_land.urls'
@@ -112,11 +114,14 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ocean_land1',
+        'NAME': 'ocean_land2',
         'USER': 'root',
         'PASSWORD': 'li123456',
-        'HOST': '106.14.220.57',
-        'PORT': '3307'
+        # 'HOST': '106.14.220.57',
+        # 'PORT': '3307'
+        #db指定成数据库的容器名称
+        'HOST': 'db',
+        'PORT': '3306'
     }
 }
 
@@ -189,35 +194,88 @@ REST_FRAMEWORK = {
 }
 
 # 添加日志配置
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'formatters': {
+#         'standard': {
+#             'format': '%(asctime)s [%(name)s:%(lineno)d] [%(module)s:%(funcName)s] [%(levelname)s] %(message)s'}
+#     },
+#     'filters': {
+#     },
+#     'handlers': {
+#         'file': {
+#             'level': 'INFO',
+#             'class': 'logging.handlers.RotatingFileHandler',
+#             'filename': os.path.join(BASE_DIR, "logs/service.log"),  # 日志输出文件
+#             'maxBytes': 1024 * 1024 * 5,  # 文件大小
+#             'backupCount': 5,  # 备份份数
+#             'formatter': 'standard',  # 使用哪种formatters日志格式
+#         },
+#         'console': {
+#             'level': 'DEBUG',
+#             'class': 'logging.StreamHandler',
+#             'formatter': 'standard'
+#         },
+#     },
+#     'loggers': {
+#         'mytest': {  # mytest，打印所有信息到名称为console的handler。
+#             'handlers': ['console', 'file'],
+#             'level': 'DEBUG',
+#             'propagate': True
+#         },
+#     }
+# }
 LOGGING = {
+    # 指定日志版本
     'version': 1,
+    # 指定是否禁用其他日志器
     'disable_existing_loggers': False,
+    # 定义日志输出的格式
     'formatters': {
-        'standard': {
-            'format': '%(asctime)s [%(name)s:%(lineno)d] [%(module)s:%(funcName)s] [%(levelname)s] %(message)s'}
+        # 简单格式
+        'simple': {
+            'format': '%(asctime)s - [%(levelname)s] - [msg]%(message)s'
+        },
+        # 复杂格式
+        'verbose': {
+            'format': '%(asctime)s - [%(levelname)s] - %(name)s - [msg]%(message)s - [%(filename)s:%(lineno)d ]'
+        },
     },
+    # 指定日志过滤规则
     'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
     },
+    # 指定日志输出渠道
     'handlers': {
+        # 指定在console终端的日志配置信息
+        'console': {
+            # 记录日志的等级
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        # 指定在日志文件配置信息
         'file': {
             'level': 'INFO',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': os.path.join(BASE_DIR, "logs/service.log"),  # 日志输出文件
-            'maxBytes': 1024 * 1024 * 5,  # 文件大小
-            'backupCount': 5,  # 备份份数
-            'formatter': 'standard',  # 使用哪种formatters日志格式
-        },
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'standard'
+            'filename': os.path.join(BASE_DIR, "logs/service.log"),  # 日志文件的位置
+            'maxBytes': 100 * 1024 * 1024,
+            'backupCount': 10,
+            'formatter': 'verbose',
+            'encoding': 'utf-8',
         },
     },
+    # 定义日志器
     'loggers': {
-        'mytest': {  # mytest，打印所有信息到名称为console的handler。
+        'dev06': {  # 定义了一个名为dev06的日志器
+            # 指定当前日志器关联的渠道
             'handlers': ['console', 'file'],
-            'level': 'DEBUG',
-            'propagate': True
+            'propagate': True,
+            'level': 'DEBUG',  # 日志器接收的最低日志级别
         },
     }
 }
@@ -228,10 +286,16 @@ JWT_AUTH = {
     'JWT_AUTH_HEADER_PREFIX': 'Bearer',
     # 设置token的失效时间
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=3),
-    #修改JWT认证之后接口返回
-    'JWT_RESPONSE_PAYLOAD_HANDLER':'utils.jwt_payload_handler.jwt_response_payload_handler',
+    # 修改JWT认证之后接口返回
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'utils.jwt_payload_handler.jwt_response_payload_handler',
 }
 
-REPORT_DIR=os.path.join(BASE_DIR,'report')
-SUITES_DIR=os.path.join(BASE_DIR,'suites')
 
+REPORT_DIR = os.path.join(BASE_DIR, 'report')
+SUITES_DIR = os.path.join(BASE_DIR, 'suites')
+# 收集静态文件
+STATIC_ROOT = os.path.join(BASE_DIR, 'front_code/static')
+
+SWAGGER_SETTINGS={
+    'VALIDATOR_URL': None
+}
