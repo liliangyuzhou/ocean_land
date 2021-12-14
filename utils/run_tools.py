@@ -5,6 +5,8 @@
 # email： liang1.li@ximalaya.com
 import json
 import os
+import time
+
 import yaml
 from rest_framework.response import Response
 from rest_framework import status
@@ -173,7 +175,10 @@ def run_testcase(instance,dir_testcase_path):
     :return:
     """
     runner=HttpRunner()
-    runner.run(dir_testcase_path)
+    try:
+        runner.run(dir_testcase_path)
+    except Exception:
+        return Response({'msg': '用例执行失败'}, status=400)
 
     runner.summary=timestamp_to_datetime( runner.summary,type=False)
 
