@@ -4,6 +4,8 @@
 # datetime： 2021/11/19 00:21 
 # email： liang1.li@ximalaya.com
 import datetime
+import json
+
 
 from rest_framework_jwt.settings import api_settings
 import re
@@ -115,5 +117,12 @@ def get_contents_from_file(filename,chunk_size=512):
                 break
 
 
+class MyEncoder(json.JSONEncoder):
+    """解决json dumps 的转换的字符串有bytes类型时错误"""
 
+    def default(self, obj):
+        if isinstance(obj, bytes):
+            return str(obj, encoding='utf-8')
+
+        return json.JSONEncoder.default(self, obj)
 

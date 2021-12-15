@@ -6,7 +6,7 @@
 import json
 import os
 import time
-
+from utils.tools import MyEncoder
 import yaml
 from rest_framework.response import Response
 from rest_framework import status
@@ -72,13 +72,21 @@ def generate_testcases_file(instance,env,dir_testcase_path):
     #如果testcases中的字段include中有config
     if 'config' in include:
         config_id=include.get('config')
-        config_obj=Configures.objects.filter(is_delete=True,id=config_id).first()
-        if config_obj:
+        config_obj=Configures.objects.filter(is_delete=False,id=config_id).first()
+        if config_obj :
             config_request=json.loads(config_obj.request,encoding="utf-8")
 
             #{"config":{"name":"3","request":{"headers":{"2":"2"}},"variables":[{"1":"1"}]}}
-            config_request.get('config').get('request').setdafault('base_url',env.base_url)
+            # config_request.get('config').get('request').setdafault('base_url',env.base_url)
+            config_request.get('config').get('request')['base_url']=env.baseurl
             config_request['config']['name']=instance.name
+            headers=config_request.get('config').get('request').get('headers')
+            if headers:
+                config_request['config']['request']['headers']=headers
+            variables=config_request.get('config').get('variables')
+            if variables:
+                config_request['config']['variables']=variables
+
             #把最开始的testcases_list中的config进行覆盖：因为此段config有肯能为空，所以就要使用上方的config
             testcases_list[0]=config_request
     #如果testcases中的字段include中有testcases（前置的测试用例）
@@ -144,7 +152,7 @@ def create_report(runner, report_name):
         except Exception as e:
             continue
     #处理完bytes类型的属性后，然后转换summary为json类型字符串，用来创建reports模型类的summary字段
-    summary=json.dumps(runner.summary,ensure_ascii=False)
+    summary=json.dumps(runner.summary,cls=MyEncoder,indent=4,ensure_ascii=False)
 
     report_name=report_name+'_'+datetime.strftime(datetime.now(),'%Y%m%d%H%M%S%f')
     #生成测试报告
